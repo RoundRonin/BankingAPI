@@ -2,24 +2,24 @@ DEV_COMPOSE_FILE=DockerComposeDev.yml
 
 ### DOCKER COMPOSE COMMANDS
 
-.PHONY: compose-build
-compose-build:
+.PHONY: cb
+cb:
 	docker compose -f $(DEV_COMPOSE_FILE) build
 
-.PHONY: compose-up
-compose-up:
+.PHONY: cu
+cu:
 	docker compose -f $(DEV_COMPOSE_FILE) up
 
-.PHONY: compose-up-build
-compose-up-build:
+.PHONY: cub
+cub:
 	docker compose -f $(DEV_COMPOSE_FILE) up --build
 
-.PHONY: compose-up-debug-build
-compose-up-debug-build:
+.PHONY: cudb
+cudb:
 	docker compose -f $(DEV_COMPOSE_FILE) -f $(DEBUG_COMPOSE_FILE) up --build
 
-.PHONY: compose-down
-compose-down:
+.PHONY: cd
+cd:
 	docker compose -f $(DEV_COMPOSE_FILE) down
 
 ###

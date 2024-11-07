@@ -21,22 +21,27 @@
 
 # Pin specific version for stability
 # Use slim for reduced image size
-FROM node:19.6-bullseye-slim AS base
+FROM node AS base
 
 # Specify working directory other than /
 WORKDIR /usr/src/app
+RUN chown -R node:node /usr/src/app
+
+USER node
 
 # Copy only package.json and package-lock.json to install dependencies
 # This allows Docker to cache dependencies if they haven't changed
 COPY package*.json ./
 
 # Install dependencies, including dev dependencies like ts-node-dev
-FROM base as dev
+FROM base AS dev
 
 # Cache npm modules to speed up build process
-RUN --mount=type=cache,target=/usr/src/app/.npm \
-  npm set cache /usr/src/app/.npm && \
-  npm install
+# RUN --mount=type=cache,target=/usr/src/app/.npm \
+#   npm set cache /usr/src/app/.npm && \
+#   npm install
+
+RUN npm install
 
 # Copy the entire application into the working directory
 COPY . .

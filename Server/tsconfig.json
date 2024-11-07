@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "NodeNext",         // <-- Set module to NodeNext
+      "moduleResolution": "NodeNext",  // <-- Set moduleResolution to NodeNext
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",            // Output compiled files here
+      "rootDir": "./src",            // Source files are in the src directory
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["src/**/*.ts"],       // Include all TypeScript files in src
+    "exclude": ["node_modules"]       // Exclude node_modules
+  }
