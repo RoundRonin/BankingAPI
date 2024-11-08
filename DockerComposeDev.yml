@@ -1,23 +1,23 @@
 services:
-#  client-react-vite:
-#    image: client-react-vite
-#    build:
-#      context: ./Client/
-#      dockerfile: ./Dockerfile
-#    init: true
-#    volumes:
-#      - type: bind
-#        source: ./ClientReact/
-#        target: /usr/src/app/
-#      - type: volume
-#        target: /usr/src/app/node_modules
-#      - type: bind
-#        source: ./ClientReact/vite.config.js
-#        target: /usr/src/app/vite.config.js
-#    networks:
-#      - frontend
-#    ports:
-#      - 5173:5173
+  #  client-react-vite:
+  #    image: client-react-vite
+  #    build:
+  #      context: ./Client/
+  #      dockerfile: ./Dockerfile
+  #    init: true
+  #    volumes:
+  #      - type: bind
+  #        source: ./ClientReact/
+  #        target: /usr/src/app/
+  #      - type: volume
+  #        target: /usr/src/app/node_modules
+  #      - type: bind
+  #        source: ./ClientReact/vite.config.js
+  #        target: /usr/src/app/vite.config.js
+  #    networks:
+  #      - frontend
+  #    ports:
+  #      - 5173:5173
   server:
     image: server
     build:
@@ -33,8 +33,12 @@ services:
         target: /usr/src/app/node_modules
     depends_on:
       - db
-    environment:
-      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+    env_file:
+      - ./Server/.env
+    # environment:
+    #   POSTGRES_USER: ${POSTGRES_USER}
+    #   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    #   POSTGRES_DB: ${POSTGRES_DB}
     networks:
       #- frontend
       - backend
@@ -45,8 +49,13 @@ services:
     image: postgres:15.1-alpine
     volumes:
       - pgdata:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=foobarbaz
+    env_file:
+      - ./Server/.env
+    # environment:
+    #   POSTGRES_USER: ${POSTGRES_USER}
+    #   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    #   POSTGRES_DB: ${POSTGRES_DB}
+    #   POSTGRES_HOST: ${POSTGRES_HOST}
     networks:
       - backend
     ports:
@@ -56,3 +65,4 @@ volumes:
 networks:
   frontend:
   backend:
+    driver: bridge
